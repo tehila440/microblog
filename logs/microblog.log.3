@@ -1,80 +1,120 @@
-2023-08-03 16:28:11,078 ERROR: Exception on /index [POST] [in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py:1454]
+2023-08-03 19:16:14,826 ERROR: Exception on /index [POST] [in /Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py:1414]
 Traceback (most recent call last):
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connection.py", line 169, in _new_conn
-    conn = connection.create_connection(
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/util/connection.py", line 96, in create_connection
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/tehila/TR_microblog/microblog/app/main/routes.py", line 35, in index
+    db.session.commit()
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/sqlalchemy/orm/scoping.py", line 552, in commit
+    return self._proxied.commit()
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1920, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1246, in commit
+    self.session.dispatch.after_commit(self.session)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/sqlalchemy/event/attr.py", line 378, in __call__
+    fn(*args, **kw)
+  File "/Users/tehila/TR_microblog/microblog/app/models.py", line 40, in after_commit
+    add_to_index(obj.__tablename__, obj)
+  File "/Users/tehila/TR_microblog/microblog/app/search.py", line 10, in add_to_index
+    current_app.elasticsearch.index(index=index, id=model.id, body=payload)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/elasticsearch/_sync/client/utils.py", line 414, in wrapped
+    return api(*args, **kwargs)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/elasticsearch/_sync/client/__init__.py", line 2318, in index
+    return self.perform_request(  # type: ignore[return-value]
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/elasticsearch/_sync/client/_base.py", line 285, in perform_request
+    meta, resp_body = self.transport.perform_request(
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/elastic_transport/_transport.py", line 329, in perform_request
+    meta, raw_data = node.perform_request(
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/elastic_transport/_node/_http_urllib3.py", line 199, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x7fb6c601adf0>: Failed to establish a new connection: [Errno 61] Connection refused))
+2023-08-03 19:16:32,243 INFO: Microblog startup [in ./app/__init__.py:79]
+2023-08-03 19:18:02,817 ERROR: Unhandled exception [in ./app/tasks.py:61]
+Traceback (most recent call last):
+  File "./app/tasks.py", line 53, in export_posts
+    send_email('[Microblog] Your blog posts',
+  File "./app/email.py", line 20, in send_email
+    mail.send(msg)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask_mail.py", line 491, in send
+    with self.connect() as connection:
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask_mail.py", line 144, in __enter__
+    self.host = self.configure_host()
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask_mail.py", line 158, in configure_host
+    host = smtplib.SMTP(self.mail.server, self.mail.port)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/smtplib.py", line 253, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/smtplib.py", line 339, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/smtplib.py", line 308, in _get_socket
+    return socket.create_connection((host, port), timeout,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py", line 808, in create_connection
     raise err
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/util/connection.py", line 86, in create_connection
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py", line 796, in create_connection
     sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2023-08-03 19:22:40,181 INFO: Microblog startup [in /Users/tehila/TR_microblog/microblog/app/__init__.py:79]
+2023-08-03 19:22:52,679 INFO: Microblog startup [in /Users/tehila/TR_microblog/microblog/app/__init__.py:79]
+2023-08-03 20:48:13,886 INFO: Microblog startup [in /Users/tehila/TR_microblog/microblog/app/__init__.py:79]
+2023-08-03 21:06:57,516 INFO: Microblog startup [in /Users/tehila/TR_microblog/microblog/app/__init__.py:79]
+2023-08-03 21:07:16,247 ERROR: Exception on /export_posts [GET] [in /Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py:1414]
+Traceback (most recent call last):
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/redis/connection.py", line 707, in connect
+    sock = self.retry.call_with_retry(
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/redis/connection.py", line 708, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/redis/connection.py", line 1006, in _connect
+    raise err
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/redis/connection.py", line 994, in _connect
+    sock.connect(socket_address)
 ConnectionRefusedError: [Errno 61] Connection refused
 
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/elasticsearch/connection/http_urllib3.py", line 251, in perform_request
-    response = self.pool.urlopen(
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connectionpool.py", line 755, in urlopen
-    retries = retries.increment(
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/util/retry.py", line 507, in increment
-    raise six.reraise(type(error), error, _stacktrace)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/packages/six.py", line 770, in reraise
-    raise value
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connectionpool.py", line 699, in urlopen
-    httplib_response = self._make_request(
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connectionpool.py", line 394, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connection.py", line 234, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1230, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1276, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1225, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1004, in _send_output
-    self.send(msg)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 944, in send
-    self.connect()
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connection.py", line 200, in connect
-    conn = self._new_conn()
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connection.py", line 181, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f8f15cd0400>: Failed to establish a new connection: [Errno 61] Connection refused
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 2070, in wsgi_app
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py", line 2190, in wsgi_app
     response = self.full_dispatch_request()
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1515, in full_dispatch_request
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py", line 1486, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1513, in full_dispatch_request
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py", line 1484, in full_dispatch_request
     rv = self.dispatch_request()
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1499, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/Users/tehila/TR_microblog/microblog/app/main/routes.py", line 35, in index
-    db.session.commit()
-  File "<string>", line 2, in commit
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1428, in commit
-    self._transaction.commit(_to_root=self.future)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 839, in commit
-    self.session.dispatch.after_commit(self.session)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/sqlalchemy/event/attr.py", line 256, in __call__
-    fn(*args, **kw)
-  File "/Users/tehila/TR_microblog/microblog/app/models.py", line 38, in after_commit
-    add_to_index(obj.__tablename__, obj)
-  File "/Users/tehila/TR_microblog/microblog/app/search.py", line 10, in add_to_index
-    current_app.elasticsearch.index(index=index, id=model.id, body=payload)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/elasticsearch/client/utils.py", line 168, in _wrapped
-    return func(*args, params=params, headers=headers, **kwargs)
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/elasticsearch/client/__init__.py", line 406, in index
-    return self.transport.perform_request(
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/elasticsearch/transport.py", line 413, in perform_request
-    raise e
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/elasticsearch/transport.py", line 381, in perform_request
-    status, headers_response, data = connection.perform_request(
-  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/elasticsearch/connection/http_urllib3.py", line 266, in perform_request
-    raise ConnectionError("N/A", str(e), e)
-elasticsearch.exceptions.ConnectionError: ConnectionError(<urllib3.connection.HTTPConnection object at 0x7f8f15cd0400>: Failed to establish a new connection: [Errno 61] Connection refused) caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x7f8f15cd0400>: Failed to establish a new connection: [Errno 61] Connection refused)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/tehila/TR_microblog/microblog/app/main/routes.py", line 225, in export_posts
+    current_user.launch_task('export_posts', _('Exporting posts...'))
+  File "/Users/tehila/TR_microblog/microblog/app/models.py", line 138, in launch_task
+    rq_job = current_app.task_queue.enqueue('app.tasks.' + name, self.id,
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/rq/queue.py", line 972, in enqueue
+    return self.enqueue_call(
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/rq/queue.py", line 721, in enqueue_call
+    return self.enqueue_job(job, pipeline=pipeline, at_front=at_front)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/rq/queue.py", line 1095, in enqueue_job
+    return self._enqueue_job(job, pipeline=pipeline, at_front=at_front)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/rq/queue.py", line 1115, in _enqueue_job
+    job.redis_server_version = self.get_redis_server_version()
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/rq/queue.py", line 219, in get_redis_server_version
+    self.redis_server_version = get_version(self.connection)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/rq/utils.py", line 293, in get_version
+    tuple(int(i) for i in connection.info("server")["redis_version"].split('.')[:3]),
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/redis/commands/core.py", line 993, in info
+    return self.execute_command("INFO", section, *args, **kwargs)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/redis/client.py", line 1266, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/redis/connection.py", line 1461, in get_connection
+    connection.connect()
+  File "/Users/tehila/TR_microblog/microblog/venv/lib/python3.8/site-packages/redis/connection.py", line 713, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 61 connecting to localhost:6379. Connection refused.
